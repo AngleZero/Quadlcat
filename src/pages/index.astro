@@ -1,0 +1,117 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+    <canvas id="canvas" width="256" height="256">
+        Erro fatal catastrófico! Não é possível renderizar gráficos neste navegador
+    </canvas>
+    <noscript>
+        O JavaScript não está funcionando aqui... Habilite-o para o site funcionar.
+    </noscript>
+
+    <div id="settings">
+        <h1 id="st-title">Quadlcat</h1>
+        <p id="st-subtitle">por Arthur K.</p>
+
+        <label>
+            Resolução:
+            <select id="st-resolution">
+                <option disabled>Resoluções quadradas</option>
+                <option value="128x128">128x128</option>
+                <option value="256x256" selected>256x256</option>
+                <option value="512x512">512x512</option>
+                <option value="1024x1024">1024x1024</option>
+
+                <option disabled>Resoluções 16:9</option>
+                <option value="160x90">160x90</option>
+                <option value="320x180">320x180</option>
+                <option value="640x360">640x360</option>
+                <option value="1280x720">1280x720</option>
+
+                <option disabled>Resoluções 9:16</option>
+                <option value="90x160">90x160</option>
+                <option value="180x320">180x320</option>
+                <option value="360x640">360x640</option>
+                <option value="720x1280">720x1280</option>
+
+                <option disabled>Experimental</option>
+                <option value="16x16">16x16</option>
+            </select>
+        </label>
+    </div>
+
+    <script>
+        import { mainloop } from "../core.ts";
+        import { canvasStartDrawing, canvasEndDrawing, canvasResize, canvasPushVertex } from "../canvas.ts";
+
+        const canvas = document.getElementById("canvas")
+
+        // canvas settings
+        {
+            document.getElementById("st-resolution").addEventListener("change", (ev) => {
+                var res = ev.target.value.split("x");
+                canvasResize(res[0], res[1]);
+            });
+        }
+
+        // main loop (core.ts)
+        mainloop()
+    </script>
+</Layout>
+
+<style>
+    @font-face {
+        font-family: "Pixel Code";
+        src: url("/PixelCode.ttf") format("truetype");
+    }
+
+    * {
+        font-family: "Pixel Code";
+    }
+
+    body {
+        overflow: hidden; /* no scrolling */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: black;
+    }
+
+    #canvas {
+        image-rendering: pixelated; /* canvas has fixed resolution and is scaled */
+    }
+
+    #settings {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 20px;
+        border-width: 0 4px 4px 0;
+        border-style: double;
+        border-color: white;
+        background-image: linear-gradient(135deg, hsla(0, 0%, 0%, 0.5), hsla(210, 50%, 30%, 0.5));
+        color: white;
+        z-index: 10;
+    }
+
+    #st-title {
+        margin: 0;
+    }
+
+    #st-subtitle {
+        margin: 0 0 30px 0;
+        font-size: 0.75em;
+    }
+
+    #settings label {
+        display: block;
+    }
+
+    #settings select {
+        background-color: transparent;
+        color: white;
+        text-align: center;
+    }
+</style>
