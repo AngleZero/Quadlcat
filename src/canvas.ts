@@ -10,7 +10,7 @@ if (!gl) {
     throw new Error("Erro fatal catastrófico! Não há WebGL2 neste navegador");
 }
 
-// vao, vbos & ebo
+// vao & vbo
 
 // allocate large fixed-size Float32Array and Uint16Array and use as if they were dynamic-size (track size with vars)
 
