@@ -107,15 +107,16 @@ gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
 // camera
 
 var cameraMat = mat4.create()
-mat4.ortho(cameraMat, 0, canvas.width, 0, canvas.height, -1, 1)
+mat4.ortho(cameraMat, canvas.width / -2, canvas.width / 2, canvas.height / -2, canvas.height / 2, -1, 1)
 
 // Rendering pipeline (every frame)
 
 export function canvasStartDrawing() {
-    // calculate canvas scale (scale to fit)
-    const scale = Math.min(innerWidth / canvas.width, innerHeight / canvas.height)
-    canvas.style.width = canvas.width * scale + "px"
-    canvas.style.height = canvas.height * scale + "px"
+    // scale to fit
+    const gameDiv = document.getElementById("game")!
+    const canvasscale = Math.min(gameDiv.clientWidth / canvas.width, gameDiv.clientHeight / canvas.height)
+    canvas.style.width = canvas.width * canvasscale + "px"
+    canvas.style.height = canvas.height * canvasscale + "px"
 
     // reset vertexes
     vertexesBatchStart = 0
@@ -138,7 +139,7 @@ export function canvasEndDrawing() {
 export function canvasResize(width:number, height: number) {
     canvas.width = width;
     canvas.height = height;
-    mat4.ortho(cameraMat, 0, canvas.width, 0, canvas.height, -1, 1);
+    mat4.ortho(cameraMat, canvas.width / -2, canvas.width / 2, canvas.height / -2, canvas.height / 2, -1, 1);
     gl.viewport(0, 0, canvas.width, canvas.height);
 }
 

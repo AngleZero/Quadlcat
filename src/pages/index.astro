@@ -3,42 +3,25 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout>
-    <canvas id="canvas" width="256" height="256">
-        Erro fatal catastrófico! Não é possível renderizar gráficos neste navegador
-    </canvas>
-    <noscript>
-        O JavaScript não está funcionando aqui... Habilite-o para o site funcionar.
-    </noscript>
+    <header id="header">
+        <img id="hd-bg" src="/header-traffic.jpg" alt="Header background"/>
+        <div id="hd-bg-cover"></div>
 
-    <div id="settings">
-        <h1 id="st-title">Quadlcat</h1>
-        <p id="st-subtitle">por Arthur K.</p>
+        <div>
+            <h1 id="hd-title">Quadlcat</h1>
+            <p id="hd-subtitle">por Arthur K.</p>
+        </div>
+    </header>
 
-        <label>
-            Resolução:
-            <select id="st-resolution">
-                <option disabled>Resoluções quadradas</option>
-                <option value="128x128">128x128</option>
-                <option value="256x256" selected>256x256</option>
-                <option value="512x512">512x512</option>
-                <option value="1024x1024">1024x1024</option>
+    <textarea id="code-editor">
+-- Editor de código --
 
-                <option disabled>Resoluções 16:9</option>
-                <option value="160x90">160x90</option>
-                <option value="320x180">320x180</option>
-                <option value="640x360">640x360</option>
-                <option value="1280x720">1280x720</option>
+-- Comece digitando seu código Lua aqui... se você quiser.
+-- Quem sabe, talvez o botão "Play" lá em cima faça algo interessante...
 
-                <option disabled>Resoluções 9:16</option>
-                <option value="90x160">90x160</option>
-                <option value="180x320">180x320</option>
-                <option value="360x640">360x640</option>
-                <option value="720x1280">720x1280</option>
-
-                <option disabled>Experimental</option>
-                <option value="16x16">16x16</option>
-            </select>
-        </label>
+</textarea>
+    <div id="game">
+        <canvas id="canvas" width="256" height="256"></canvas>
     </div>
 
     <script>
@@ -47,14 +30,6 @@ import Layout from '../layouts/Layout.astro';
 
         const canvas = document.getElementById("canvas")
 
-        // canvas settings
-        {
-            document.getElementById("st-resolution").addEventListener("change", (ev) => {
-                var res = ev.target.value.split("x");
-                canvasResize(res[0], res[1]);
-            });
-        }
-
         // main loop (core.ts)
         mainloop()
     </script>
@@ -62,45 +37,70 @@ import Layout from '../layouts/Layout.astro';
 
 <style>
     @font-face {
+        font-family: "Lexend";
+        src: url("/Lexend-Regular.ttf") format("truetype");
+    }
+
+    @font-face {
         font-family: "Pixel Code";
         src: url("/PixelCode.ttf") format("truetype");
     }
 
     * {
-        font-family: "Pixel Code";
+        font-family: "Lexend";
     }
 
     body {
         overflow: hidden; /* no scrolling */
-        display: flex;
-        justify-content: center;
-        align-items: center;
         height: 100vh;
         background-color: black;
+        display: grid;
+        grid:
+            "hd hd" 120px
+            "cd gm" 2fr
+            "cd gm" 1fr / 1fr 1fr;
     }
 
-    #canvas {
-        image-rendering: pixelated; /* canvas has fixed resolution and is scaled */
+    #header {
+        grid-area: hd; /* for body grid */
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        position: relative;
+        padding: 20px;
+
+        border-width: 2px;
+        border-style: dashed;
+        border-color: white;
+        color: white;
     }
 
-    #settings {
+    #hd-bg {
         position: absolute;
         top: 0;
         left: 0;
-        padding: 20px;
-        border-width: 0 4px 4px 0;
-        border-style: double;
-        border-color: white;
-        background-image: linear-gradient(135deg, hsla(0, 0%, 0%, 0.5), hsla(210, 50%, 30%, 0.5));
-        color: white;
-        z-index: 10;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -2;
     }
 
-    #st-title {
+    #hd-bg-cover {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        backdrop-filter: blur(1px);
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 1));
+        z-index: -1;
+    }
+
+    #hd-title {
         margin: 0;
     }
 
-    #st-subtitle {
+    #hd-subtitle {
         margin: 0 0 30px 0;
         font-size: 0.75em;
     }
@@ -113,5 +113,27 @@ import Layout from '../layouts/Layout.astro';
         background-color: transparent;
         color: white;
         text-align: center;
+    }
+
+    #code-editor {
+        grid-area: cd;/* for body grid */
+        padding: 50px;
+        outline: none; /* when focused */
+        resize: none;
+        font-family: "Pixel Code";
+        font-variant-ligatures: none; /* Pixel Code ligatures are annoying */
+        background-color: black;
+        color: white;
+    }
+
+    #game {
+        grid-area: gm; /* for body grid */
+        display: flex;
+        justify-content: center; /* center canvas, canvas is automatically scaled to fit in canvas.ts */
+        align-items: center;
+    }
+
+    #canvas {
+        image-rendering: pixelated; /* canvas has fixed resolution and is scaled */
     }
 </style>
