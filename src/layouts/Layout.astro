@@ -7,17 +7,31 @@
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Quadlcat</title>
+
+		<style>
+			html, body {
+				margin: 0;
+				width: 100%;
+				height: 100%;
+			}
+		
+			@font-face {
+				font-family: "Lexend";
+				src: url("/Lexend-Regular.ttf") format("truetype");
+			}
+		
+			@font-face {
+				font-family: "Pixel Code";
+				src: url("/PixelCode.ttf") format("truetype");
+			}
+		
+			* {
+				font-family: "Lexend";
+			}
+		</style>
+		
 	</head>
 	<body>
 		<slot />
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>

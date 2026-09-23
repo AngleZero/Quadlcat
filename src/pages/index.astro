@@ -3,137 +3,29 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout>
-    <header id="header">
-        <img id="hd-bg" src="/header-traffic.jpg" alt="Header background"/>
-        <div id="hd-bg-cover"></div>
-
-        <div>
-            <h1 id="hd-title">Quadlcat</h1>
-            <p id="hd-subtitle">por Arthur K.</p>
+    <header>
+        <div id="hd-content">
+            <h1>Quadlcat</h1>
+            <p>por Arthur k.</p>
         </div>
     </header>
-
-    <textarea id="code-editor">
--- Editor de código --
-
--- Comece digitando seu código Lua aqui... se você quiser.
--- Quem sabe, talvez o botão "Play" lá em cima faça algo interessante...
-
-</textarea>
-    <div id="game">
-        <canvas id="canvas" width="256" height="256"></canvas>
-    </div>
-
-    <script>
-        import { mainloop } from "../core.ts";
-        import { canvasStartDrawing, canvasEndDrawing, canvasResize, canvasPushVertex } from "../canvas.ts";
-
-        const canvas = document.getElementById("canvas")
-
-        // main loop (core.ts)
-        mainloop()
-    </script>
 </Layout>
 
 <style>
-    @font-face {
-        font-family: "Lexend";
-        src: url("/Lexend-Regular.ttf") format("truetype");
-    }
-
-    @font-face {
-        font-family: "Pixel Code";
-        src: url("/PixelCode.ttf") format("truetype");
-    }
-
-    * {
-        font-family: "Lexend";
-    }
-
-    body {
-        overflow: hidden; /* no scrolling */
+    header {
+        width: 100vw;
         height: 100vh;
-        background-color: black;
-        display: grid;
-        grid:
-            "hd hd" 120px
-            "cd gm" 2fr
-            "cd gm" 1fr / 1fr 1fr;
-    }
-
-    #header {
-        grid-area: hd; /* for body grid */
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        position: relative;
-        padding: 20px;
-
-        border-width: 2px;
-        border-style: dashed;
-        border-color: white;
-        color: white;
-    }
-
-    #hd-bg {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: -2;
-    }
-
-    #hd-bg-cover {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        backdrop-filter: blur(1px);
-        background-image: linear-gradient(to right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 1));
-        z-index: -1;
-    }
-
-    #hd-title {
-        margin: 0;
-    }
-
-    #hd-subtitle {
-        margin: 0 0 30px 0;
-        font-size: 0.75em;
-    }
-
-    #settings label {
-        display: block;
-    }
-
-    #settings select {
-        background-color: transparent;
-        color: white;
-        text-align: center;
-    }
-
-    #code-editor {
-        grid-area: cd;/* for body grid */
-        padding: 50px;
-        outline: none; /* when focused */
-        resize: none;
-        font-family: "Pixel Code";
-        font-variant-ligatures: none; /* Pixel Code ligatures are annoying */
-        background-color: black;
-        color: white;
-    }
-
-    #game {
-        grid-area: gm; /* for body grid */
-        display: flex;
-        justify-content: center; /* center canvas, canvas is automatically scaled to fit in canvas.ts */
+        justify-content: center;
         align-items: center;
     }
 
-    #canvas {
-        image-rendering: pixelated; /* canvas has fixed resolution and is scaled */
+    #hd-content h1 {
+        font-size: 4rem;
+        margin: 0;
+    }
+
+    #hd-content p {
+        margin: 0;
     }
 </style>

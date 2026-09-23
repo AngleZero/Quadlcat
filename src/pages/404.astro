@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+    <div id="error-cont">
+        <h1>404</h1>
+        <p>não encontrei a página <span id="error-path">{Astro.url.pathname}</span></p>
+    </div>
+</Layout>
+
+<style>
+    body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #error-cont {
+        text-align: center;
+    }
+
+    #error-cont h1 {
+        margin: 0;
+        font-size: 4em;
+    }
+
+    #error-cont p {
+        margin: 0;
+        max-width: 500px;
+        word-wrap: break-word;
+
+        max-height: 500px;
+        overflow-y: scroll;
+    }
+
+    #error-path {
+        background-color: black;
+        color: white;
+        padding: 0 10px;
+        font-family: "Pixel Code";
+    }
+</style>
