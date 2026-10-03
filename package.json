@@ -6,20 +6,22 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
+    "dev": "concurrently 'astro dev' 'npm run dev:wasm'",
+    "dev:wasm": "chokidar 'wasm/*' -c 'npm run build:wasm'",
     "build": "astro build",
+    "build:wasm": "emcc wasm/main.cpp -Iwasm/include -Lwasm/lib -lraylib.web -s USE_GLFW=3 -s USE_WEBGL2=1 -s WASM=1 --bind -o public/wasm/main.js",
+    "predev": "npm run build:wasm",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^7.3.3",
-    "fengari": "^0.1.5",
-    "gl-matrix": "^3.4.4"
+    "astro": "^7.3.3"
   },
   "allowScripts": {
     "esbuild": true
   },
   "devDependencies": {
-    "@types/gl-matrix": "^2.4.5"
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^10.0.5"
   }
 }
